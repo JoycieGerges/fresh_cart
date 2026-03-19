@@ -1,6 +1,6 @@
 "use server";
 
-import { CheckoutSchemaTypes } from "@/Schema/Checkout.Schema";
+import { CheckoutSchemaTypes } from "@/schema/checkout.schema";
 import axios, { AxiosRequestConfig } from "axios";
 import { cookies } from "next/headers";
 
