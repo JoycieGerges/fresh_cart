@@ -1,0 +1,81 @@
+"use client";
+import { AppState } from "@/shop/auth.shop";
+import { OrderResponse } from "@/ts/order";
+import { getUserOrders } from "@/APIs/order";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import OrderCard from "./components/OrderCard/OrderCard";
+
+export default function Order() {
+  const { userInfo } = useSelector((state: AppState) => state.auth);
+  const [orders, setOrders] = useState<null | OrderResponse>(null);
+
+  if (!userInfo) {
+    return;
+  }
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      const response = await getUserOrders({ userId: userInfo.id });
+      setOrders(response);
+    };
+    fetchOrders();
+  }, []);
+
+  if (!orders || orders.length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[60vh] px-4 text-center">
+        <div className="bg-gray-100 p-6 rounded-full mb-4">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-12 w-12 text-gray-400"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+            />
+          </svg>
+        </div>
+        <h3 className="text-xl font-semibold text-gray-900 mb-2">
+          No orders found
+        </h3>
+        <p className="text-gray-500 max-w-xs mb-6">
+          It looks like you haven&apos;t placed any orders yet. Start exploring
+          our shop!
+        </p>
+        <button
+          onClick={() => (window.location.href = "/web/products")}
+          className="px-6 py-2 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition-colors shadow-sm"
+        >
+          Start Shopping
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-50/50 py-12">
+      <div className="container mx-auto w-[95%] lg:w-[80%] max-w-5xl">
+        <div className="mb-10">
+          <h1 className="text-4xl font-black text-gray-900 tracking-tight">
+            My Orders
+          </h1>
+          <p className="text-gray-500 mt-2 font-medium">
+            Track, manage, and review your previous purchases.
+          </p>
+        </div>
+
+        <div className="space-y-6">
+          {orders.map((order) => (
+            <OrderCard key={order.id} order={order} />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
