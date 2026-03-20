@@ -1,6 +1,6 @@
 
 
-import { Product } from "./APIsType";
+import { Product } from "./apis";
 
 
 export interface Subcategory {
