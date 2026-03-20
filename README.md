@@ -6,8 +6,8 @@ Fresh Cart is a modern e-commerce web application built with Next.js. It allows 
 
 # 🌍 Live Demo
 
-Check out the live website here:
-[[Insert Live Demo Link Here]](https://fresh-cart-six-jet.vercel.app/)
+Check out the live website here: https://fresh-cart-six-jet.vercel.app/
+
 
 ---
 
